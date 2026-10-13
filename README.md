@@ -73,7 +73,7 @@ sh gradlew test
 - `build.gradle`: Java 21 설정, JUnit 의존성, 테스트 실행 방식.
 - `settings.gradle`: 프로젝트 이름.
 - `gradlew`, `gradlew.bat`, `gradle/wrapper/`: 정해진 Gradle 버전을 실행하는 공식 Wrapper.
-- `.gitignore`: 빌드 결과와 캐시를 제외하는 규칙. 이 프로젝트에서는 Git 저장소를 만들지 않았습니다.
+- `.gitignore`: 빌드 결과와 캐시를 제외하는 규칙.
 
 Java는 코드를 실행하고, Gradle은 컴파일·의존성 다운로드·테스트 실행을 관리하며,
 JUnit은 기대값과 실제 동작을 비교합니다. 이 프로젝트에는 실행용 `main` 메서드가 없습니다.
@@ -98,6 +98,11 @@ JUnit은 기대값과 실제 동작을 비교합니다. 이 프로젝트에는 �
 
 ## 실제 확인 결과
 
+GitHub Actions 검증: https://github.com/zeroinmars/backend-basics-java/actions/runs/38361584784
+
+학습 블로그: https://velog.io/@zeroinmars-dev21/posts (첫 글은 검토 전 임시저장 상태)
+
+
 - JDK 21.0.11에서 실제 프로젝트 소스의 클래스 파일을 생성했습니다.
 - 독립 실행형 JUnit Platform Console 1.11.0(JUnit Jupiter 5.11.0)으로 테스트 5개를 실행했습니다: 5개 성공, 0개 실패, 종료 코드 0.
 - 전달 파일이 아닌 임시 복사본에서만 `isBlank()`를 `isEmpty()`로 바꿨습니다: 4개 성공, 공백 제목 테스트 1개 실패, 종료 코드 1.
@@ -107,6 +112,6 @@ JUnit은 기대값과 실제 동작을 비교합니다. 이 프로젝트에는 �
 
 Gradle 테스트는 이 환경의 DNS/파일시스템 제한 때문에 실행되지 못했습니다. Wrapper 다운로드는 `UnknownHostException: services.gradle.org`, 직접 Gradle 실행은 초기화 중 `IOException: 액세스가 거부되었습니다`로 막혔습니다. 독립 JUnit 결과를 Gradle 성공으로 간주하지 않습니다. Gradle 설정의 JUnit 버전은 5.11.4이므로, 위 독립 실행 결과와 버전도 다릅니다.
 
-`.github/workflows/test.yml`은 저장소에 올렸을 때 Ubuntu와 Java 21에서 `sh gradlew test`를 실행합니다. 읽기 전용 권한만 사용하며 별도 자격 증명을 요구하지 않습니다. 아직 업로드하거나 CI 결과를 확인하지 않았습니다.
+`.github/workflows/test.yml`은 저장소에 올렸을 때 Ubuntu와 Java 21에서 `sh gradlew test`를 실행합니다. 읽기 전용 권한만 사용하며 별도 자격 증명을 요구하지 않습니다. GitHub에 커밋한 뒤 CI에서 compileJava, compileTestJava, test가 실행되었고, 테스트 5개 모두 PASSED 및 BUILD SUCCESSFUL을 확인했습니다.
 
 공식 Gradle 배포 ZIP 및 생성된 Wrapper JAR의 SHA-256을 공식 값과 대조했습니다. 독립 JUnit JAR도 Maven Central의 SHA-256과 일치했습니다. 빌드 결과와 `.gradle/` 캐시는 전달하지 않습니다.
